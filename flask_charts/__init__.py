@@ -1,10 +1,9 @@
-from jinja2 import Markup, Environment, PackageLoader
-from .utils import render_data, prep_data
-import flask
 import json
 import string
+from jinja2 import Markup, Environment, PackageLoader
 import pkg_resources
-
+import flask
+from .utils import render_data, prep_data
 
 class GenericChart(object):
 
