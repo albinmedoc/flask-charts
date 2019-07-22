@@ -18,7 +18,7 @@ class GenericChart(object):
         self._rows = []
 
         if(not isinstance(self.id, str)):
-            raise TypeError("id must be type str, not {}", type(self.id))
+            raise TypeError("id must be type str, not {}".format(type(self.id)))
         if(not self.id):
             raise ValueError("id must contain at least one character.")
         if(" " in self.id):
