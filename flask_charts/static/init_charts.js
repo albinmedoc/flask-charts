@@ -4,16 +4,21 @@ $(document).ready(function () {
     function renderCharts() {
       $('.chart').each( function(i, c) {
         var chart_info = JSON.parse($(this).children('.chart-info').text());
-        //$(this).children('.chart-info').remove();
+        if(chart_info.data_url){
+          chart_info.data = $.ajax({
+            url: chart_info.data_url,
+            dataType: "json",
+            async: false
+            }).responseText;
+        }
+
         temp = {
           'containerId': $(this).attr('id'),
-            'chartType':chart_info.type,
+          'chartType':chart_info.type,
+          'dataTable': chart_info.data,
           'dataSourceUrl': chart_info.data_url,
           'options': chart_info.options
         };
-        if("data" in chart_info){
-            temp.dataTable = chart_info.data;
-        }
         var wrapper = new google.visualization.ChartWrapper(temp);
         google.visualization.events.addListener(wrapper, 'ready', onReady);
         wrapper.draw();
