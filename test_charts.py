@@ -62,7 +62,10 @@ class TestGenericChart(unittest.TestCase):
             chart = GenericChart(1)
         with self.assertRaises(ValueError):
             chart = GenericChart("BananaChart", "chart")
-        #Add tests for chart type
+        with self.assertRaises(ValueError):
+            chart = GenericChart("PieChart", "!chart")
+        with self.assertRaises(TypeError):
+            chart = GenericChart("PieChart", 123)
 
 if __name__ == "__main__":
     unittest.main()
