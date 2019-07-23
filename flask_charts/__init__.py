@@ -93,7 +93,7 @@ class ChartData():
         if isinstance(row, list):
             self._rows.append(row)
         else:
-            raise TypeError("rows must be type list, not {}".format(type(rows)))
+            raise TypeError("row must be type list, not {}".format(type(row)))
     
     # For python < 3.0
     def __nonzero__(self):
