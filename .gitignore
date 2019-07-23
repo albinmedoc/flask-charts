@@ -5,3 +5,4 @@ Flask_Charts.egg-info/*
 build/*
 env/*
 .vscode/*
+.coverage
