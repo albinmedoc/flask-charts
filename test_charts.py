@@ -74,10 +74,10 @@ class TestGenericChart(unittest.TestCase):
         with self.assertRaises(TypeError):
             chart = GenericChart("PieChart", 123)
     
-    def test_addEventListener():
+    def test_addEventListener(self):
         chart = GenericChart("PieChart", "test")
         chart.add_event_listener("ready", "my_function")
-        assert chart.event_listeners[0][0] == "ready" and chart.event_listeners[0][1] == "my_function"
+        assert chart.event_listeners[0]["event"] == "ready" and chart.event_listeners[0]["function"] == "my_function"
 
 if __name__ == "__main__":
     unittest.main()
