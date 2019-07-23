@@ -19,12 +19,16 @@ class GenericChart(object):
 
         if(not isinstance(self.id, str)):
             raise TypeError("id must be type str, not {}".format(type(self.id)))
+        if(self.id.isdigit()):
+            raise ValueError("id can´t be a number")
         if(not self.id):
             raise ValueError("id must contain at least one character.")
         if(" " in self.id):
             raise ValueError("id may not contain spaces; they are not supported in id values in HTML5.")
         if(not ord(self.id[0]) < 128):
             raise ValueError("id must start with a letter as it is used as a JavaScript variable name")
+        if(self.type not in ["AnnotationChart", "AreaChart", "BarChart", "BubbleChart", "CalendarChart", "CandlestickChart", "ColumnChart", "ComboChart", "GanttChart", "GaugeChart", "GeoChart", "Histogram", "LineChart", "Map", "OrgChart", "PieChart", "Sankey", "ScatterChart"]):
+            raise ValueError("{} is not a valid Chart type or it´s not implemented.".format(self.type))
         
     def add_event_listener(self, event, function_name):
         self.event_listeners.append({
@@ -57,7 +61,6 @@ class GenericChart(object):
     
     def __call__(self):
         return Markup(Environment(loader=PackageLoader("flask_charts", "templates")).get_template("chart.html").render(chart=self))
-
 
 class AnnotationChart(GenericChart):
     def __init__(self, id_, options=None, data_url=None):
