@@ -1,0 +1,3 @@
+include LICENSE CONTRIBUTORS
+recursive-include flask_charts/templates *
+recursive-include flask_charts/static *
