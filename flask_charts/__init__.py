@@ -23,7 +23,7 @@ class GenericChart(object):
             raise ValueError("id must contain at least one character.")
         if(" " in self.id):
             raise ValueError("id may not contain spaces; they are not supported in id values in HTML5.")
-        if(not ord(self.id[0]) < 128):
+        if(self.id[0] not in string.ascii_letters):
             raise ValueError("id must start with a letter as it is used as a JavaScript variable name")
         if(self.type not in ["AnnotationChart", "AreaChart", "BarChart", "BubbleChart", "CalendarChart", "CandlestickChart", "ColumnChart", "ComboChart", "GanttChart", "GaugeChart", "GeoChart", "Histogram", "LineChart", "Map", "OrgChart", "PieChart", "Sankey", "ScatterChart"]):
             raise ValueError("{} is not a valid Chart type or it´s not implemented.".format(self.type))
