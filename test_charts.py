@@ -55,7 +55,7 @@ class TestGenericChart(unittest.TestCase):
         chart = GenericChart("PieChart", "test")
         chart.data.add_row(["test", 200])
         assert chart.data._rows[0][0] == "test" and chart.data._rows[0][1] == 200
-        with self.assertRaises(TypeError):s
+        with self.assertRaises(TypeError):
             chart.data.add_row("row")
 
     def test_init(self):
