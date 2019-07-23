@@ -7,7 +7,7 @@ from .utils import render_data, prep_data
 
 class GenericChart(object):
 
-    def __init__(self, id_, type_, options=None, data_url=None):
+    def __init__(self, type_, id_, options=None, data_url=None):
         self.id = id_
         self.type = type_
         self.options = options
@@ -62,99 +62,6 @@ class GenericChart(object):
     def __call__(self):
         return Markup(Environment(loader=PackageLoader("flask_charts", "templates")).get_template("chart.html").render(chart=self))
 
-class AnnotationChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "AnnotationChart", options=options, data_url=data_url)
-
-
-class AreaChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "AreaChart", options=options, data_url=data_url)
-
-
-class BarChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "BarChart", options=options, data_url=data_url)
-
-
-class BubbleChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "BubbleChart", options=options, data_url=data_url)
-
-
-class CalendarChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "Calendar", options=options, data_url=data_url)
-
-
-class CandlestickChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "CandlestickChart", options=options, data_url=data_url)
-
-
-class ColumnChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "ColumnChart", options=options, data_url=data_url)
-
-
-class ComboChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "ComboChart", options=options, data_url=data_url)
-
-class DiffChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        raise NotImplementedError("DiffChart is not yet available in Flask-Charts")
-
-
-class GanttChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "Gantt", options=options, data_url=data_url)
-
-
-class GaugeChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "Gauge", options=options, data_url=data_url)
-
-
-class GeoChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "GeoChart", options=options, data_url=data_url)
-
-
-class Histogram(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "Histogram", options=options, data_url=data_url)
-
-
-class LineChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "LineChart", options=options, data_url=data_url)
-
-
-class Map(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "Map", options=options, data_url=data_url)
-
-
-class OrgChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "OrgChart", options=options, data_url=data_url)
-
-
-class PieChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "PieChart", options=options, data_url=data_url)
-
-
-class Sankey(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "Sankey", options=options, data_url=data_url)
-
-
-class ScatterChart(GenericChart):
-    def __init__(self, id_, options=None, data_url=None):
-        super().__init__(id_, "ScatterChart", options=options, data_url=data_url)
-
 class GoogleCharts(object):
     def __init__(self, app=None):
 
@@ -174,7 +81,7 @@ class GoogleCharts(object):
         raise TypeError("app must be type flask.Flask, not {}".format(type(app)))
 
     def template_variables(self):
-        return {'charts_init': Markup("<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script><script type='text/javascript' src='/init_charts.js'></script>")}
+        return {'init_charts': Markup("<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script><script type='text/javascript' src='/init_charts.js'></script>")}
     
     def _init_charts(self):
         return flask.send_file(pkg_resources.resource_stream("flask_charts", "static/init_charts.js"),
