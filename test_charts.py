@@ -45,7 +45,7 @@ class TestGenericChart(unittest.TestCase):
     def test_addColumn(self):
         chart = GenericChart("PieChart", "test")
         chart.data.add_column("string", "col")
-        assert chart.data._columns[0][0] == "string" and chart.data_columns[0][1] == "col"
+        assert chart.data._columns[0][0] == "string" and chart.data._columns[0][1] == "col"
         with self.assertRaises(ValueError):
             chart.data.add_column("", "")
         with self.assertRaises(TypeError):
