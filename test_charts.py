@@ -4,7 +4,7 @@ import json
 import sys
 
 from flask import Flask
-from flask_charts import GoogleCharts, GenericChart, BarChart, LineChart, PieChart
+from flask_charts import GoogleCharts, GenericChart
 
 if sys.version_info < (2, 7):
     import unittest2 as unittest
@@ -43,7 +43,7 @@ class TestGenericCharts(unittest.TestCase):
         self.app = None
 
     def test_addColumn(self):
-        chart = GenericChart("test", "PieChart")
+        chart = GenericChart("PieChart", "test")
         chart.add_column("string", "col")
         assert chart._columns[0][0] == "string" and chart._columns[0][1] == "col"
         with self.assertRaises(ValueError):
@@ -53,15 +53,15 @@ class TestGenericCharts(unittest.TestCase):
 
     def test_init(self):
         with self.assertRaises(ValueError):
-            chart = GenericChart("", "PieChart")
+            chart = GenericChart("PieChart", "")
         with self.assertRaises(ValueError):
-            GenericChart("A B", "PieChart")
+            GenericChart("PieChart", "A B")
         with self.assertRaises(ValueError):
-            GenericChart("3", "PieChart")
+            GenericChart("PieChart", "3")
         with self.assertRaises(TypeError):
             chart = GenericChart(1)
         with self.assertRaises(ValueError):
-            chart = GenericChart("chart", "BananaChart")
+            chart = GenericChart("BananaChart", "chart")
         #Add tests for chart type
 
 if __name__ == "__main__":
