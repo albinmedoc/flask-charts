@@ -60,6 +60,8 @@ class TestGenericCharts(unittest.TestCase):
             GenericChart("3", "PieChart")
         with self.assertRaises(TypeError):
             chart = GenericChart(1)
+        with self.assertRaises(ValueError):
+            chart = GenericChart("chart", "BananaChart")
         #Add tests for chart type
 
 if __name__ == "__main__":
