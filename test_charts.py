@@ -31,7 +31,7 @@ class TestGoogleCharts(unittest.TestCase):
             self.charts.init_app(1)
 
 
-class TestGenericCharts(unittest.TestCase):
+class TestGenericChart(unittest.TestCase):
     def setUp(self):
         app = Flask(__name__)
         app.debug = True
@@ -44,12 +44,12 @@ class TestGenericCharts(unittest.TestCase):
 
     def test_addColumn(self):
         chart = GenericChart("PieChart", "test")
-        chart.add_column("string", "col")
-        assert chart._columns[0][0] == "string" and chart._columns[0][1] == "col"
+        chart.data.add_column("string", "col")
+        assert chart.data._columns[0][0] == "string" and chart.data_columns[0][1] == "col"
         with self.assertRaises(ValueError):
-            chart.add_column("", "")
+            chart.data.add_column("", "")
         with self.assertRaises(TypeError):
-            chart.add_column(1)
+            chart.data.add_column(1)
 
     def test_init(self):
         with self.assertRaises(ValueError):
