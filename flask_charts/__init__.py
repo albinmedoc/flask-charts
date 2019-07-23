@@ -11,11 +11,9 @@ class GenericChart(object):
         self.id = id_
         self.type = type_
         self.options = options
+        self.data = ChartData()
         self.data_url = data_url
         self.event_listeners = []
-
-        self._columns = []
-        self._rows = []
 
         if(not isinstance(self.id, str)):
             raise TypeError("id must be type str, not {}".format(type(self.id)))
@@ -36,30 +34,20 @@ class GenericChart(object):
             "function": function_name
         })
 
-    def add_column(self, type_, label=""):
-        if isinstance(label, str) and isinstance(type_, str):
-            if type_ in ["boolean", "date", "datetime", "number", "string", "timeofday"]:
-                self._columns.append((type_, label))
-            else:
-                raise ValueError("{} is not a valid column type".format(type_))
-        else:
-            raise TypeError("type_ and label must be strings")
-
-    def add_rows(self, rows):
-        if isinstance(rows, list):
-            self._rows += rows
-        else:
-            raise TypeError("rows must be type list, not {}".format(type(rows)))
-
-    @property
-    def data_json(self):
-        return json.dumps(render_data(self._columns, self._rows))
-
-    @property
-    def options_json(self):
-        return json.dumps(self.options)
+    def get_json(self):
+        temp = {}
+        temp["type"] = self.type
+        temp["options"] = self.options
+        if(self.data):
+            temp["data"] = self.data.to_json()
+        elif(self.data_url is not None):
+            temp["data_url"] = self.data_url
+        if(self.event_listeners):
+            temp["event_listeners"] = self.event_listeners
+        return json.dumps(temp)
     
     def __call__(self):
+        #Make sure either data or data_url is set
         return Markup(Environment(loader=PackageLoader("flask_charts", "templates")).get_template("chart.html").render(chart=self))
 
 class GoogleCharts(object):
@@ -87,7 +75,36 @@ class GoogleCharts(object):
         return flask.send_file(pkg_resources.resource_stream("flask_charts", "static/init_charts.js"),
                                attachment_filename="init_charts.js")
 
-def ChartData(data):
-    if(not isinstance(data, dict)):
-        TypeError("data must be a dict")
-    return flask.jsonify(prep_data(data))
+class ChartData():
+    def __init__(self):
+        self._columns = []
+        self._rows = []
+    
+    def add_column(self, type_, label=""):
+        if isinstance(label, str) and isinstance(type_, str):
+            if type_ in ["boolean", "date", "datetime", "number", "string", "timeofday"]:
+                self._columns.append((type_, label))
+            else:
+                raise ValueError("{} is not a valid column type".format(type_))
+        else:
+            raise TypeError("type_ and label must be strings")
+    
+    def add_row(self, row):
+        if isinstance(row, list):
+            self._rows.append(row)
+        else:
+            raise TypeError("rows must be type list, not {}".format(type(rows)))
+    
+    # For python < 3.0
+    def __nonzero__(self):
+        return len(self._columns) > 0 and len(self._rows) > 0
+    
+    # For python => 3.0
+    def __bool__(self):
+        return len(self._columns) > 0 and len(self._rows) > 0
+    
+    def to_json(self):
+        return json.dumps(render_data(self._columns, self._rows))
+
+    def data(self):
+        return render_data(self._columns, self._rows)
