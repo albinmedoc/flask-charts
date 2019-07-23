@@ -50,6 +50,13 @@ class TestGenericChart(unittest.TestCase):
             chart.data.add_column("", "")
         with self.assertRaises(TypeError):
             chart.data.add_column(1)
+    
+    def test_addRow(self):
+        chart = GenericChart("PieChart", "test")
+        chart.data.add_row(["test", 200])
+        assert chart.data._rows[0][0] == "test" and chart.data._rows[0][1] == 200
+        with self.assertRaises(TypeError):s
+            chart.data.add_row("row")
 
     def test_init(self):
         with self.assertRaises(ValueError):
@@ -66,6 +73,11 @@ class TestGenericChart(unittest.TestCase):
             chart = GenericChart("PieChart", "!chart")
         with self.assertRaises(TypeError):
             chart = GenericChart("PieChart", 123)
+    
+    def test_addEventListener():
+        chart = GenericChart("PieChart", "test")
+        chart.add_event_listener("ready", "my_function")
+        assert chart.event_listeners[0][0] == "ready" and chart.event_listeners[0][1] == "my_function"
 
 if __name__ == "__main__":
     unittest.main()
