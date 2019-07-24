@@ -2,6 +2,7 @@ from __future__ import with_statement
 
 import json
 import sys
+import datetime
 
 from flask import Flask
 from flask_charts import GoogleCharts, GenericChart, ChartData
@@ -104,7 +105,11 @@ class TestChartData(unittest.TestCase):
         assert data._rows[0][0] == "test" and data._rows[0][1] == 200
         with self.assertRaises(TypeError):
             data.add_row("row")
-    
+
+        data.add_row([datetime.datetime(2019, 1, 1, 1, 1, 1, 1), datetime.date(2019, 1, 1)])
+        json_data = json.loads(data.to_json())
+        assert json_data["rows"][1]["c"][0]["v"] == "Date(2019, 0, 1, 1, 1, 1, 1)" and json_data["rows"][1]["c"][1]["v"] == "Date(2019, 0, 1)"
+
     def test_bool(self):
         data = ChartData()
         self.assertFalse(data)
