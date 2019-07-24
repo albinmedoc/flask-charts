@@ -63,6 +63,30 @@ class TestGenericChart(unittest.TestCase):
         chart = GenericChart("PieChart", "test")
         chart.add_event_listener("ready", "my_function")
         assert chart.event_listeners[0]["event"] == "ready" and chart.event_listeners[0]["function"] == "my_function"
+    
+    def test_getJson(self):
+        chart = GenericChart("PieChart", "test", options={"title": "chart"}, data_url="/data")
+        chart.add_event_listener("ready", "my_function")
+        self.assertTrue(chart.get_json() == json.dumps({
+                                                        "type": "PieChart",
+                                                        "options": {"title": "chart"},
+                                                        "data_url": "/data",
+                                                        "event_listeners": [{
+                                                                            "event": "ready",
+                                                                            "function": "my_function"
+                                                                            }]
+                                                        }))
+        chart.data.add_column("string", "col")
+        chart.data.add_row(["test", 200])
+        self.assertTrue(chart.get_json() == json.dumps({
+                                                        "type": "PieChart",
+                                                        "options": {"title": "chart"},
+                                                        "data": chart.data.to_json(),
+                                                        "event_listeners": [{
+                                                                            "event": "ready",
+                                                                            "function": "my_function"
+                                                                            }]
+                                                        }))
 
 class TestChartData(unittest.TestCase):
     def test_addColumn(self):
