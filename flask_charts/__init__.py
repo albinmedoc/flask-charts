@@ -1,3 +1,4 @@
+# -*- coding: utf-8
 import json
 import string
 from jinja2 import Markup, Environment, PackageLoader
