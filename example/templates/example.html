@@ -4,10 +4,11 @@
         <meta charset="UTF-8">
         <title>Flask-Charts Example</title>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        {{ charts_init }}
+        {{ init_charts }}
     </head>
     <body>
         <h2>Pie Chart</h2>
         {{ pizza_chart() }}
+        {{ url_chart() }}
     </body>
 </html>
