@@ -20,6 +20,7 @@ def index():
     pizza_chart.data.add_row(["Albin", 3])
     pizza_chart.data.add_row(["Robert", 4])
     pizza_chart.data.add_row(["Daniel", 2.5])
+    pizza_chart.add_event_listener("select", "my_function")
 
     url_chart = GenericChart("PieChart", "url_chart", options= {"title": "Pizzas eaten #2"}, data_url=url_for("data"))
     return render_template("example.html", pizza_chart=pizza_chart, url_chart=url_chart)
