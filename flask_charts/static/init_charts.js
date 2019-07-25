@@ -26,7 +26,7 @@ $(document).ready(function () {
           if(chart_info.event_listeners){
               chart_info.event_listeners.forEach(function (event_listener) {
                 if(window[event_listener.function]){
-                  google.visualization.events.addListener(wrapper.getChart(), event_listener.event, window[event_listener.function](wrapper.getChart()));
+                  google.visualization.events.addListener(wrapper.getChart(), event_listener.event, window[event_listener.function]);
               }
             });
           }
