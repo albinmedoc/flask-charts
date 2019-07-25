@@ -25,7 +25,7 @@ def index():
     url_chart = GenericChart("PieChart", "url_chart", options= {"title": "Pizzas eaten #2"}, data_url=url_for("data"))
     return render_template("example.html", pizza_chart=pizza_chart, url_chart=url_chart)
 
-@app.route("/data", methods=["GET"])
+@app.route("/data", methods=["POST"])
 def data():
     data = ChartData()
     data.add_column("string", "Person")
