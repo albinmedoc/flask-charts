@@ -37,6 +37,7 @@ class GenericChart(object):
 
     def get_json(self):
         temp = {}
+        temp["id"] = self.id
         temp["type"] = self.type
         temp["options"] = self.options
         if(self.data):
