@@ -49,6 +49,8 @@ class GenericChart(object):
     
     def __call__(self):
         #Make sure either data or data_url is set
+        if(not self.data and not self.data_url):
+            raise Warning("Chart´s data or data_url must be set to render the chart")
         return Markup(Environment(loader=PackageLoader("flask_charts", "templates")).get_template("chart.html").render(chart=self))
 
 class GoogleCharts(object):
