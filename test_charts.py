@@ -5,6 +5,7 @@ import sys
 import datetime
 
 from flask import Flask
+from jinja2 import Markup
 from flask_charts import GoogleCharts, GenericChart, ChartData
 
 if sys.version_info < (2, 7):
@@ -88,6 +89,18 @@ class TestGenericChart(unittest.TestCase):
                                                                             "function": "my_function"
                                                                             }]
                                                         }))
+    
+    def test_render(self):
+        chart = GenericChart("PieChart", "test")
+        with self.assertRaises(Warning):
+            chart()
+        chart.data.add_column("string", "col")
+        with self.assertRaises(Warning):
+            chart()
+        chart.data.add_row(["test", 200])
+        self.assertTrue(isinstance(chart(), Markup))
+
+
 
 class TestChartData(unittest.TestCase):
     def test_addColumn(self):
