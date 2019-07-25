@@ -70,6 +70,7 @@ class TestGenericChart(unittest.TestCase):
         chart = GenericChart("PieChart", "test", options={"title": "chart"}, data_url="/data")
         chart.add_event_listener("ready", "my_function")
         self.assertTrue(chart.get_json() == json.dumps({
+                                                        "id": "test",
                                                         "type": "PieChart",
                                                         "options": {"title": "chart"},
                                                         "data_url": "/data",
@@ -81,6 +82,7 @@ class TestGenericChart(unittest.TestCase):
         chart.data.add_column("string", "col")
         chart.data.add_row(["test", 200])
         self.assertTrue(chart.get_json() == json.dumps({
+                                                        "id": "test",
                                                         "type": "PieChart",
                                                         "options": {"title": "chart"},
                                                         "data": chart.data.to_json(),
