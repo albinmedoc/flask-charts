@@ -67,12 +67,13 @@ class TestGenericChart(unittest.TestCase):
         assert chart.event_listeners[0]["event"] == "ready" and chart.event_listeners[0]["function"] == "my_function"
     
     def test_getJson(self):
-        chart = GenericChart("PieChart", "test", options={"title": "chart"}, data_url="/data")
+        chart = GenericChart("PieChart", "test", options={"title": "chart"}, data_url="/data", refresh=5000)
         chart.add_event_listener("ready", "my_function")
         self.assertTrue(chart.get_json() == json.dumps({
                                                         "id": "test",
                                                         "type": "PieChart",
                                                         "options": {"title": "chart"},
+                                                        "refresh": 5000,
                                                         "data_url": "/data",
                                                         "event_listeners": [{
                                                                             "event": "ready",
@@ -85,6 +86,7 @@ class TestGenericChart(unittest.TestCase):
                                                         "id": "test",
                                                         "type": "PieChart",
                                                         "options": {"title": "chart"},
+                                                        "refresh": 5000,
                                                         "data": chart.data.to_json(),
                                                         "event_listeners": [{
                                                                             "event": "ready",
