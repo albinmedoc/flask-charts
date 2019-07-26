@@ -1,7 +1,9 @@
+var flask_charts = {};
+
 window.onload = function () {
   google.charts.load('current');
-  google.charts.setOnLoadCallback(renderCharts);
-  function renderCharts() {
+  google.charts.setOnLoadCallback(init_charts);
+  function init_charts() {
     var charts = document.getElementsByClassName("chart");
     for (var i = 0; i < charts.length; i++) {
       var chart_info = JSON.parse(charts[i].firstElementChild.innerHTML);
@@ -40,6 +42,11 @@ function setup_chart(chart_info) {
           google.visualization.events.addListener(wrapper, event_listener.event, window[event_listener.function]);
         }
       });
+    }
+    flask_charts[chart_info.id] = {};
+    flask_charts[chart_info.id]["chart"] = wrapper.getChart();
+    if(!chart_info.data_url){
+      flask_charts[chart_info.id]["data"] = JSON.parse(chart_info.data);
     }
   }
 }
