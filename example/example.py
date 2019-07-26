@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template, url_for
 from flask_charts import GoogleCharts, GenericChart, ChartData
+from random import randint
 
 app = Flask(__name__)
 charts = GoogleCharts(app)
@@ -21,9 +22,9 @@ def index():
     pizza_chart.data.add_row(["Robert", 4])
     pizza_chart.data.add_row(["Daniel", 2.5])
     pizza_chart.add_event_listener("select", "my_function")
-
-    url_chart = GenericChart("PieChart", "url_chart", options= {"title": "Pizzas eaten #2"}, data_url=url_for("data"))
-    return render_template("example.html", pizza_chart=pizza_chart, url_chart=url_chart)
+                                                                                                                      # Refreshes every second
+    random_chart = GenericChart("PieChart", "random_chart", options= {"title": "Random values"}, data_url=url_for("data"), refresh=1000)
+    return render_template("example.html", pizza_chart=pizza_chart, random_chart=random_chart)
 
 @app.route("/data", methods=["POST"])
 def data():
@@ -31,9 +32,9 @@ def data():
     data.add_column("string", "Person")
     data.add_column("number", "Count")
 
-    data.add_row(["Ben", 4])
-    data.add_row(["Julia", 2])
-    data.add_row(["George", 3.5])
+    data.add_row(["Ben", randint(1, 100)])
+    data.add_row(["Julia", randint(1, 100)])
+    data.add_row(["George", randint(1, 100)])
 
     return jsonify(data.data())
 
