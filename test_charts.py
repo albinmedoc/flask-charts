@@ -26,7 +26,7 @@ class TestGoogleCharts(unittest.TestCase):
         self.app = None
 
     def test(self):
-        self.assertTrue("renderCharts()" in self.client.get("/init_charts.js").data.decode("utf8"))
+        self.assertTrue("init_charts()" in self.client.get("/init_charts.js").data.decode("utf8"))
 
 
     def test_init_app(self):
