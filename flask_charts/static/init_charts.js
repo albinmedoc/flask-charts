@@ -33,9 +33,9 @@ function setup_chart(chart_info) {
     'options': chart_info.options
   };
   var wrapper = new google.visualization.ChartWrapper(temp);
-  google.visualization.events.addListener(wrapper, 'ready', onReady);
+  google.visualization.events.addListener(wrapper, 'ready', on_ready);
   wrapper.draw();
-  function onReady() {
+  function on_ready() {
     if (chart_info.event_listeners) {
       chart_info.event_listeners.forEach(function (event_listener) {
         if (window[event_listener.function]) {
