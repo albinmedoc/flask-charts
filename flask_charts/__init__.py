@@ -8,10 +8,11 @@ from .utils import render_data, prep_data
 
 class GenericChart(object):
 
-    def __init__(self, type_, id_, options=None, data_url=None):
+    def __init__(self, type_, id_, options=None, data_url=None, refresh=None):
         self.id = id_
         self.type = type_
         self.options = options
+        self.refresh = refresh
         self.data = ChartData()
         self.data_url = data_url
         self.event_listeners = []
@@ -40,6 +41,8 @@ class GenericChart(object):
         temp["id"] = self.id
         temp["type"] = self.type
         temp["options"] = self.options
+        if(self.refresh is not None):
+            temp["refresh"] = self.refresh
         if(self.data):
             temp["data"] = self.data.to_json()
         elif(self.data_url is not None):
