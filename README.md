@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.com/albinmedoc/flask-charts.svg?token=4GyhcjtfvUszyhA5DD7J&branch=master)](https://travis-ci.com/albinmedoc/flask-charts)
 [![codecov](https://codecov.io/gh/albinmedoc/flask-charts/branch/master/graph/badge.svg?token=puiuyNKZuh)](https://codecov.io/gh/albinmedoc/flask-charts)
 [![PyPI version](https://badge.fury.io/py/Flask-Charts.svg)](https://badge.fury.io/py/Flask-Charts)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Flask-Charts is a Flask extension for dealing with chart visualization. Flask-Charts is using [Google Charts](https://developers.google.com/chart/) to render charts on the client-side.
 
