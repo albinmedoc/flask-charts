@@ -1,6 +1,6 @@
 // Select event (runs when user selects a value in chart)
 function my_function(e){
-    var chart = flask_charts["pizza"]["chart"];
+    var chart = flask_charts["pizza"]["chart"].getChart();
 
     // Retrieves the charts data (rows and columns)
     var chart_data = flask_charts["pizza"]["data"];
