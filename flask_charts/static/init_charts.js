@@ -50,7 +50,7 @@ function setup_chart(chart_info) {
         }
       });
     }
-    flask_charts[chart_info.id] = {};s
+    flask_charts[chart_info.id] = {};
     flask_charts[chart_info.id] = wrapper;
   }
 }
