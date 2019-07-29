@@ -17,13 +17,83 @@ pip install Flask-Charts
 ```
 
 ## Usage
-### Init Flask-Charts
+
+### Setup
+Google charts are controlled through a **GoogleCharts** instance
 ```python
-from flask import Flask, jsonify, render_template, url_for
-from flask_charts import GoogleCharts, GenericChart, ChartData
+from flask import Flask
+from flask_charts import GoogleCharts
 
 app = Flask(__name__)
 charts = GoogleCharts(app)
+```
+You can also set up the GoogleCharts instance later using the **init_app** method
+```python
+charts = GoogleCharts()
+
+app = Flask(__name__)
+charts.init_app(app)
+```
+
+### Creating Charts
+Import GenericChart and declare it in your view, give it a type and id at a minimum
+```python
+from flask_charts import GenericChart
+
+my_chart = GenericChart("PieChart", "my_chart")
+```
+
+#### Adding Data to a Chart
+You can populate the chart using the **addColumn** and **addRows** methods on the chart.data
+```python
+my_chart.data.add_column("string", "Person")
+my_chart.data.add_column("number", "Count")
+my_chart.data.add_row(["Albin", 3])
+my_chart.data.add_row(["Robert", 4])
+my_chart.data.add_row(["Daniel", 2.5])
+```
+If you will be pulling JSON data from another endpoint, just specify the url in the **data_url** variable
+```python
+my_chart.data_url = url_for("data"))
+```
+
+#### Auto refresh chart data
+If you are pulling data from an url you can specify how often the data will refresh
+```python
+my_chart.refresh = 5000 # 5 seconds interval
+```
+
+#### Adding Event Handlers to a chart
+In python you have to select a event type and a javascript callback function
+```python
+my_chart.add_event_listener("select", "my_function")
+```
+In the callback function you can do whatever you want
+```javascript
+function my_function(){
+    alert("You selected a value in the chart");
+}
+```
+
+### Including Charts in Templates
+Create your chart and send it to the template
+```python
+...
+return render_template("index.html", my_chart=my_chart)
+```
+On every page where there will be charts, you must include **{{ init_charts }}**.
+```html
+<head>
+    <meta charset="UTF-8">
+    <title>Flask-Charts Example</title>
+    {{ init_charts }}
+</head>
+```
+To display the chart, you need to call the template variable you assign the chart to
+```html
+<body>
+{{ my_chart() }}
+</body>
 ```
 
 ## Contributing
