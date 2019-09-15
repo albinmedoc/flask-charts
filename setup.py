@@ -8,7 +8,7 @@ Easily add google charts to Flask templates
 from setuptools import setup
 setup(
     name='Flask-Charts',
-    version='1.5',
+    version='1.7',
     url='https://github.com/albinmedoc/flask-charts',
     license='MIT',
     author='Albin Médoc',
@@ -38,6 +38,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: JavaScript',
+        'Programming Language :: HTML',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ]
