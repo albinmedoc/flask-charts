@@ -36,11 +36,11 @@ charts.init_app(app)
 ```
 
 ### Creating Charts
-Import GenericChart and declare it in your view, give it a type and id at a minimum
+Import Chart and declare it in your view, give it a type and id at a minimum
 ```python
-from flask_charts import GenericChart
+from flask_charts import Chart
 
-my_chart = GenericChart("PieChart", "my_chart")
+my_chart = Chart("PieChart", "my_chart")
 ```
 
 #### Adding Data to a Chart

@@ -6,7 +6,7 @@ import datetime
 
 from flask import Flask
 from jinja2 import Markup
-from flask_charts import GoogleCharts, GenericChart, ChartData
+from flask_charts import GoogleCharts, Chart, ChartData
 
 if sys.version_info < (2, 7):
     import unittest2 as unittest
@@ -34,7 +34,7 @@ class TestGoogleCharts(unittest.TestCase):
             self.charts.init_app(1)
 
 
-class TestGenericChart(unittest.TestCase):
+class TestChart(unittest.TestCase):
     def setUp(self):
         app = Flask(__name__)
         app.debug = True
@@ -47,27 +47,27 @@ class TestGenericChart(unittest.TestCase):
 
     def test_init(self):
         with self.assertRaises(ValueError):
-            chart = GenericChart("PieChart", "")
+            chart = Chart("PieChart", "")
         with self.assertRaises(ValueError):
-            GenericChart("PieChart", "A B")
+            Chart("PieChart", "A B")
         with self.assertRaises(ValueError):
-            GenericChart("PieChart", "3")
+            Chart("PieChart", "3")
         with self.assertRaises(TypeError):
-            chart = GenericChart(1)
+            chart = Chart(1)
         with self.assertRaises(ValueError):
-            chart = GenericChart("BananaChart", "chart")
+            chart = Chart("BananaChart", "chart")
         with self.assertRaises(ValueError):
-            chart = GenericChart("PieChart", "!chart")
+            chart = Chart("PieChart", "!chart")
         with self.assertRaises(TypeError):
-            chart = GenericChart("PieChart", 123)
+            chart = Chart("PieChart", 123)
     
     def test_addEventListener(self):
-        chart = GenericChart("PieChart", "test")
+        chart = Chart("PieChart", "test")
         chart.add_event_listener("ready", "my_function")
         assert chart.event_listeners[0]["event"] == "ready" and chart.event_listeners[0]["function"] == "my_function"
     
     def test_getJson(self):
-        chart = GenericChart("PieChart", "test", options={"title": "chart"}, data_url="/data", refresh=5000)
+        chart = Chart("PieChart", "test", options={"title": "chart"}, data_url="/data", refresh=5000)
         chart.add_event_listener("ready", "my_function")
         self.assertTrue(chart.get_json() == json.dumps({
                                                         "id": "test",
@@ -95,7 +95,7 @@ class TestGenericChart(unittest.TestCase):
                                                         }))
     
     def test_render(self):
-        chart = GenericChart("PieChart", "test")
+        chart = Chart("PieChart", "test")
         with self.assertRaises(Warning):
             chart()
         chart.data.add_column("string", "col")
