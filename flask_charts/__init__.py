@@ -6,7 +6,7 @@ import pkg_resources
 import flask
 from .utils import render_data, prep_data
 
-class GenericChart(object):
+class Chart(object):
 
     def __init__(self, type_, id_, options=None, data_url=None, refresh=None):
         self.id = id_
