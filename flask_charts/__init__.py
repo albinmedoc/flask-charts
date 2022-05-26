@@ -1,7 +1,8 @@
 # -*- coding: utf-8
 import json
 import string
-from jinja2 import Markup, Environment, PackageLoader
+from markupsafe import Markup
+from jinja2 import Environment, PackageLoader
 import pkg_resources
 import flask
 from .utils import render_data, prep_data
