@@ -1,7 +1,8 @@
 # -*- coding: utf-8
 import json
 import string
-from jinja2 import Markup, Environment, PackageLoader
+from markupsafe import Markup
+from jinja2 import Environment, PackageLoader
 import pkg_resources
 import flask
 from .utils import render_data, prep_data
@@ -29,7 +30,7 @@ class Chart(object):
             raise ValueError("id must start with a letter as it is used as a JavaScript variable name")
         if(self.type not in ["AnnotationChart", "AreaChart", "BarChart", "BubbleChart", "CalendarChart", "CandlestickChart", "ColumnChart", "ComboChart", "GanttChart", "GaugeChart", "GeoChart", "Histogram", "LineChart", "Map", "OrgChart", "PieChart", "Sankey", "ScatterChart"]):
             raise ValueError("{} is not a valid Chart type or it´s not implemented.".format(self.type))
-        
+
     def add_event_listener(self, event, function_name):
         self.event_listeners.append({
             "event": event,
@@ -50,7 +51,7 @@ class Chart(object):
         if(self.event_listeners):
             temp["event_listeners"] = self.event_listeners
         return json.dumps(temp)
-    
+
     def __call__(self):
         #Make sure either data or data_url is set
         if(not self.data and not self.data_url):
@@ -77,7 +78,7 @@ class GoogleCharts(object):
 
     def template_variables(self):
         return {'init_charts': Markup("<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script><script type='text/javascript' src='/init_charts.js'></script>")}
-    
+
     def _init_charts(self):
         return flask.send_file(pkg_resources.resource_stream("flask_charts", "static/init_charts.js"),
                                attachment_filename="init_charts.js")
@@ -86,7 +87,7 @@ class ChartData():
     def __init__(self):
         self._columns = []
         self._rows = []
-    
+
     def add_column(self, type_, label=""):
         if isinstance(label, str) and isinstance(type_, str):
             if type_ in ["boolean", "date", "datetime", "number", "string", "timeofday"]:
@@ -95,21 +96,21 @@ class ChartData():
                 raise ValueError("{} is not a valid column type".format(type_))
         else:
             raise TypeError("type_ and label must be strings")
-    
+
     def add_row(self, row):
         if isinstance(row, list):
             self._rows.append(row)
         else:
             raise TypeError("row must be type list, not {}".format(type(row)))
-    
+
     # For python < 3.0
     def __nonzero__(self):
         return len(self._columns) > 0 and len(self._rows) > 0
-    
+
     # For python => 3.0
     def __bool__(self):
         return len(self._columns) > 0 and len(self._rows) > 0
-    
+
     def to_json(self):
         return json.dumps(render_data(self._columns, self._rows))
 
